@@ -1,0 +1,43 @@
+{
+  "name": "@sidetone/web",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build --webpack",
+    "test:live-cards": "node --import tsx --test app/inngest/live-card-workflow.test.ts app/lib/buildium.test.ts",
+    "typecheck": "next typegen && tsc --project tsconfig.json --noEmit",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@clerk/nextjs": "^7.3.4",
+    "@sidetone/contracts": "*",
+    "@radix-ui/react-slot": "^1.2.4",
+    "@tiptap/pm": "^3.23.5",
+    "@tiptap/react": "^3.23.5",
+    "@tiptap/starter-kit": "^3.23.5",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "convex": "^1.22.0",
+    "inngest": "^4.4.0",
+    "lucide-react": "^1.14.0",
+    "next": "16.4.0",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6",
+    "sanitize-html": "2.18.0",
+    "stripe": "^22.1.1",
+    "tailwind-merge": "^3.5.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.0",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@types/sanitize-html": "^2.16.1",
+    "autoprefixer": "^10.4.15",
+    "postcss": "8.5.29",
+    "tailwindcss": "^3.3.3",
+    "tailwindcss-animate": "^1.0.7",
+    "typescript": "^5.8.3"
+  },
+  "version": "0.1.0",
+  "license": "Apache-2.0"
+}

@@ -1,0 +1,3 @@
+export default function SetupPage() {
+  return <main id="main" className="mx-auto grid max-w-2xl gap-6 px-6 py-20"><a href="/" className="text-3xl font-semibold">Sidetone</a><h1 className="text-4xl font-semibold">Set up this installation</h1><p>Follow the repository README to configure your authentication, database, transcription, and AI accounts. Run the setup checker to see which settings are missing.</p><p>Once configuration is complete, restart the application and sign in. Phone and meeting sources are optional.</p><a className="text-primary underline" href="/sign-in">Continue to sign in</a></main>;
+}

@@ -1,0 +1,35 @@
+# Core deployment uses your own Convex, Clerk, Inngest, and AI accounts.
+# docker compose --env-file apps/sidetone/.env.local up --build -d
+services:
+  web:
+    build:
+      context: .
+      args:
+        NEXT_PUBLIC_APP_URL: ${NEXT_PUBLIC_APP_URL:?Set your public app URL}
+        NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: ${NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY:?Set your Clerk publishable key}
+        NEXT_PUBLIC_CONVEX_URL: ${NEXT_PUBLIC_CONVEX_URL:?Set your Convex URL}
+    env_file: apps/sidetone/.env.local
+    environment:
+      NODE_ENV: production
+      INNGEST_DEV: '0'
+    ports:
+      - '127.0.0.1:3000:3000'
+    restart: unless-stopped
+    healthcheck:
+      test: ['CMD', 'node', '-e', "fetch('http://127.0.0.1:3000/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+  realtime:
+    profiles: ['phone']
+    build:
+      context: .
+      dockerfile: workers/sidetone-realtime/Dockerfile
+    environment:
+      CONVEX_URL: ${NEXT_PUBLIC_CONVEX_URL}
+      ASSEMBLYAI_API_KEY: ${ASSEMBLYAI_API_KEY}
+      SIDETONE_WORKER_TOKEN: ${SIDETONE_WORKER_TOKEN}
+      SIDETONE_STREAM_SHARED_SECRET: ${SIDETONE_STREAM_SHARED_SECRET}
+    ports:
+      - '127.0.0.1:8080:8080'
+    restart: unless-stopped

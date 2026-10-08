@@ -1,0 +1,43 @@
+{
+  "name": "sidetone",
+  "version": "0.1.0",
+  "private": true,
+  "license": "Apache-2.0",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/*",
+    "workers/*"
+  ],
+  "overrides": {
+    "next": "16.4.0",
+    "postcss": "8.5.29",
+    "sharp": "0.35.5"
+  },
+  "scripts": {
+    "setup": "node scripts/setup.mjs",
+    "doctor": "node scripts/doctor.mjs",
+    "dev": "npm run dev --workspace @sidetone/web",
+    "build": "npm run build --workspace @sidetone/contracts && npm run build --workspace @sidetone/web && npm run build --workspace @sidetone/realtime && npm run build --workspace @sidetone/discord && npm run build --workspace @sidetone/zoom-rtms",
+    "start": "npm run start --workspace @sidetone/web",
+    "convex:dev": "cd apps/sidetone && npx convex dev",
+    "convex:deploy": "cd apps/sidetone && npx convex deploy",
+    "convex:configure": "node scripts/configure-convex.mjs",
+    "dev:inngest": "npx inngest-cli@latest dev -u http://localhost:3000/api/inngest",
+    "dev:realtime": "node --env-file=apps/sidetone/.env.local --import tsx workers/sidetone-realtime/src/index.ts",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "test": "vitest run && node --test scripts/*.test.mjs",
+    "test:live-cards": "npm run test:live-cards --workspace @sidetone/web",
+    "scan:secrets": "node scripts/scan-secrets.mjs"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.3",
+    "tsx": "^4.19.4",
+    "vitest": "^5.0.3",
+    "convex-test": "^0.0.60",
+    "@edge-runtime/vm": "^5.0.0",
+    "@types/node": "^22.15.0"
+  }
+}
